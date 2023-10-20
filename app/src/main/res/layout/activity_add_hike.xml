@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddHike">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:gravity="center"
+        android:text="Add Hike New"
+        android:textSize="35sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="51dp"
+        android:layout_marginEnd="25dp"
+        android:text="Name of Hike"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="81dp"
+        android:layout_marginEnd="22dp"
+        android:hint="Please enter name hike"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="122dp"
+        android:layout_marginEnd="25dp"
+        android:text="Location of Hike"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="152dp"
+        android:layout_marginEnd="22dp"
+        android:hint="Please fill in hike location"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="195dp"
+        android:layout_marginEnd="25dp"
+        android:text="Date of Hike"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/datePickerButton"
+        style="?android:spinnerStyle"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="225dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/black"
+        android:hint="Date and Time"
+        android:inputType="datetime"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/parking_available"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="280dp"
+        android:layout_marginEnd="25dp"
+        android:text="Parking Available"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="250dp"
+        android:layout_height="26dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="179dp"
+        android:layout_marginTop="281dp"
+        android:layout_marginEnd="24dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_yes"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="Yes"
+            android:textSize="17sp" />
+
+        <RadioButton
+            android:id="@+id/radio_no"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="No"
+            android:textSize="17sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/lengthofhike"
+        android:layout_width="125dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="314dp"
+        android:text="Length of Hike"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:layout_width="230dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="314dp"
+        android:layout_toEndOf="@+id/lengthofhike"
+        android:hint="Please fill in Length Hike" />
+
+    <TextView
+        android:id="@+id/difficulty_level"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="360dp"
+        android:text="Difficulty Level"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:layout_width="230dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="360dp"
+        android:layout_toEndOf="@+id/difficulty_level"
+        android:hint="Select level hike" />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="400dp"
+        android:text="Description"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="435dp"
+        android:layout_marginEnd="25dp"
+        android:hint="Please fill in Description" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="590dp"
+        android:layout_marginEnd="25dp"
+        android:text="Save"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        app:itemBackground="@color/white"
+        app:menu="@menu/my_menu_bottom" />
+</RelativeLayout>
