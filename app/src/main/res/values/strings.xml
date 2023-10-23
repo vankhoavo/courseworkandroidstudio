@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">CourseworkAndroid</string>
+
+    <string-array name="hike_level">
+        <item>Easy hike</item>
+        <item>Intermediate hike</item>
+        <item>Challenging hike</item>
+        <item>Difficult hike</item>
+        <item>Very difficult hike</item>
+    </string-array>
 </resources>

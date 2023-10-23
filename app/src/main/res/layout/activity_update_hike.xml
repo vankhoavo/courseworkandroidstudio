@@ -13,7 +13,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:gravity="center"
-        android:text="Add Hike New"
+        android:text="Update Hike"
         android:textSize="35sp"
         android:textStyle="bold" />
 
@@ -28,7 +28,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/hike_name"
+        android:id="@+id/hike_name_edit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="22dp"
@@ -48,7 +48,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/hike_location"
+        android:id="@+id/hike_location_edit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="22dp"
@@ -68,8 +68,7 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/hike_datetime"
-        android:onClick="openDatePiker"
+        android:id="@+id/hike_datetime_edit"
         style="?android:spinnerStyle"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -78,6 +77,7 @@
         android:layout_marginEnd="20dp"
         android:background="@color/black"
         android:hint="Date and Time"
+        android:inputType="datetime"
         android:textStyle="bold" />
 
     <TextView
@@ -92,7 +92,7 @@
         android:textStyle="bold" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/radioGroup_edit"
         android:layout_width="250dp"
         android:layout_height="26dp"
         android:layout_alignParentStart="true"
@@ -103,14 +103,14 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/radio_yes"
+            android:id="@+id/radio_yes_edit"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:text="Yes"
             android:textSize="17sp" />
 
         <RadioButton
-            android:id="@+id/radio_no"
+            android:id="@+id/radio_no_edit"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:text="No"
@@ -128,8 +128,8 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/hike_length"
         android:inputType="number"
+        android:id="@+id/hike_length_edit"
         android:layout_width="230dp"
         android:layout_height="41dp"
         android:layout_marginStart="11dp"
@@ -148,7 +148,7 @@
         android:textStyle="bold" />
 
     <Spinner
-        android:id="@+id/hike_spinner"
+        android:id="@+id/hike_spinner_edit"
         android:layout_width="230dp"
         android:layout_height="38dp"
         android:layout_marginStart="10dp"
@@ -166,23 +166,23 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/hike_description"
+        android:inputType="text"
+        android:id="@+id/hike_description_edit"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="435dp"
         android:layout_marginEnd="25dp"
-        android:inputType="text"
         android:hint="Please fill in Description" />
 
     <Button
-        android:id="@+id/save"
+        android:id="@+id/hike_update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="590dp"
         android:layout_marginEnd="25dp"
-        android:text="Save"
+        android:text="Update"
         android:textSize="20dp"
         android:textStyle="bold" />
 

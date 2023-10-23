@@ -12,11 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CourseworkAndroid"
         tools:targetApi="31">
-
+        <activity
+            android:name=".DetailHike"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateHike"
+            android:exported="false" />
         <activity
             android:name=".AddHike"
             android:label="Add Hike"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

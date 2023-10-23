@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UpdateHike">
+
+    <include
+        layout="@layout/action_back"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Detail Hike"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="25dp"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Name of Hike"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="125dp"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/value_name_hike"
+        android:layout_width="226dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="125dp"
+        android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:layout_marginTop="210dp"
+        android:layout_marginStart="25dp"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/value_location_hike"
+        android:layout_width="226dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="210dp"
+        android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Date of Hike"
+        android:layout_marginTop="295dp"
+        android:layout_marginStart="25dp"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/value_datetime_hike"
+        android:layout_width="226dp"
+        android:layout_height="wrap_content"
+        android:text="21/10/2023"
+        android:layout_marginTop="295dp"
+        android:layout_marginStart="160dp"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Parking Available"
+        android:layout_marginTop="338dp"
+        android:layout_marginStart="25dp"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/value_parkingavailable_hike"
+        android:layout_width="226dp"
+        android:layout_height="52dp"
+        android:text="Yes"
+        android:layout_marginTop="338dp"
+        android:layout_marginStart="160dp"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Length of Hike"
+        android:layout_marginTop="400dp"
+        android:layout_marginStart="25dp"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/value_length_hike"
+        android:layout_width="226dp"
+        android:layout_height="52dp"
+        android:text="100"
+        android:layout_marginTop="400dp"
+        android:layout_marginStart="160dp"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="465dp"
+        android:layout_marginStart="25dp"
+        android:text="Difficulty Level"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/value_difficulty_hike"
+        android:layout_width="226dp"
+        android:layout_height="52dp"
+        android:text="Easy Item"
+        android:layout_marginTop="465dp"
+        android:layout_marginStart="160dp"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="525dp"
+        android:layout_marginStart="25dp"
+        android:text="Description of Hike"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/value_description_hike"
+        android:layout_width="226dp"
+        android:layout_height="52dp"
+        android:text="Easy Item"
+        android:layout_marginTop="525dp"
+        android:layout_marginStart="160dp"
+        android:textSize="20sp"/>
+</RelativeLayout>
