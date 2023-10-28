@@ -76,7 +76,35 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         if (rs == -1) {
             Toast.makeText(context, "Failed to Delete of Hike", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Successful to Delêt of Hike ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Successful to Delete of Hike ", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void updateHike(HikeModel hikeModel) {
+        SQLiteDatabase hikeupdate = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("hike_name", hikeModel.getHike_name());
+        contentValues.put("hike_location", hikeModel.getHike_location());
+        contentValues.put("hike_datetime", hikeModel.getHike_datetime());
+        contentValues.put("hike_parking_available", hikeModel.getHike_parking_available());
+        contentValues.put("hike_length", hikeModel.getHike_length());
+        contentValues.put("hike_difficulty", hikeModel.getHike_difficulty());
+        contentValues.put("hike_description", hikeModel.getHike_description());
+        long rs = hikeupdate.update(TABLE_NAME, contentValues, "hike_id=?", new String[]{String.valueOf(hikeModel.getHike_id())});
+        if (rs == -1) {
+            Toast.makeText(context, "Failed to Update Hike", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Successful to Update Hike", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void deleteAllHike() {
+        SQLiteDatabase deleteallhike = this.getWritableDatabase();
+        long rs = deleteallhike.delete(TABLE_NAME, null, null);
+        if (rs == -1) {
+            Toast.makeText(context, "Failed to Delete All Hike", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Successful to Delete All Hike", Toast.LENGTH_SHORT).show();
         }
     }
 }

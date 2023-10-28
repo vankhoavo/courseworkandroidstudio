@@ -6,22 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".AddHike">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:gravity="center"
-        android:text="Update Hike"
-        android:textSize="35sp"
-        android:textStyle="bold" />
+    <include
+        android:id="@+id/include_itemhike"
+        layout="@layout/action_back_update" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="51dp"
+        android:layout_marginTop="66dp"
         android:layout_marginEnd="25dp"
         android:text="Name of Hike"
         android:textSize="19sp"
@@ -32,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="81dp"
+        android:layout_marginTop="95dp"
         android:layout_marginEnd="22dp"
         android:hint="Please enter name hike"
         android:inputType="text" />
@@ -41,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="122dp"
+        android:layout_marginTop="135dp"
         android:layout_marginEnd="25dp"
         android:text="Location of Hike"
         android:textSize="19sp"
@@ -52,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="160dp"
         android:layout_marginEnd="22dp"
         android:hint="Please fill in hike location"
         android:inputType="text" />
@@ -68,6 +61,7 @@
         android:textStyle="bold" />
 
     <Button
+        android:onClick="openDatePiker"
         android:id="@+id/hike_datetime_edit"
         style="?android:spinnerStyle"
         android:layout_width="match_parent"
@@ -128,14 +122,14 @@
         android:textStyle="bold" />
 
     <EditText
-        android:inputType="number"
         android:id="@+id/hike_length_edit"
         android:layout_width="230dp"
         android:layout_height="41dp"
         android:layout_marginStart="11dp"
         android:layout_marginTop="314dp"
         android:layout_toEndOf="@+id/lengthofhike"
-        android:hint="Please fill in Length Hike" />
+        android:hint="Please fill in Length Hike"
+        android:inputType="number" />
 
     <TextView
         android:id="@+id/difficulty_level"
@@ -166,14 +160,14 @@
         android:textStyle="bold" />
 
     <EditText
-        android:inputType="text"
         android:id="@+id/hike_description_edit"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="435dp"
         android:layout_marginEnd="25dp"
-        android:hint="Please fill in Description" />
+        android:hint="Please fill in Description"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/hike_update"

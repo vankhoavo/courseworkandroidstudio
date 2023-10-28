@@ -49,13 +49,13 @@ public class AdapterHike extends RecyclerView.Adapter<AdapterHike.MyViewr> {
         holder.icon_image_edit.setOnClickListener(v -> {
             Intent intent = new Intent(context, UpdateHike.class);
             intent.putExtra("hike_id",String.valueOf(hikeModel.getHike_id()));
-            intent.putExtra("hike_name",String.valueOf(hikeModel.getHike_id()));
-            intent.putExtra("hike_location",String.valueOf(hikeModel.getHike_id()));
-            intent.putExtra("hike_datetime",String.valueOf(hikeModel.getHike_id()));
-            intent.putExtra("hike_parking_available",String.valueOf(hikeModel.getHike_id()));
-            intent.putExtra("hike_length",String.valueOf(hikeModel.getHike_id()));
-            intent.putExtra("hike_difficulty",String.valueOf(hikeModel.getHike_id()));
-            intent.putExtra("hike_description",String.valueOf(hikeModel.getHike_id()));
+            intent.putExtra("hike_name",String.valueOf(hikeModel.getHike_name()));
+            intent.putExtra("hike_location",String.valueOf(hikeModel.getHike_location()));
+            intent.putExtra("hike_datetime",String.valueOf(hikeModel.getHike_datetime()));
+            intent.putExtra("hike_parking_available",String.valueOf(hikeModel.getHike_parking_available()));
+            intent.putExtra("hike_length",String.valueOf(hikeModel.getHike_length()));
+            intent.putExtra("hike_difficulty",String.valueOf(hikeModel.getHike_difficulty()));
+            intent.putExtra("hike_description",String.valueOf(hikeModel.getHike_description()));
             activity.startActivityForResult(intent,1);
         });
 
