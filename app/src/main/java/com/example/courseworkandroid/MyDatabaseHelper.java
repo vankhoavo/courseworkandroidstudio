@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
-    //Nó lỗi là hãy tạo constructor cho nó
     //Context: Là một lớp trong Android chứa thông tin về trạng thái và môi trường của ứng dụng.
     // Một Context thường được sử dụng để có được thông tin về các tài nguyên của ứng dụng, khởi chạy các dịch vụ,
     // và thực hiện các hoạt động liên quan đến môi trường thực thi của ứng dụng.

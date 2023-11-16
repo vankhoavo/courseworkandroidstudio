@@ -99,7 +99,6 @@ public class AddHike extends AppCompatActivity {
                                 "Length: " + hike_length.getText().toString().trim() + "\n" +
                                 "Level: " + hike_spinner.getSelectedItem().toString().trim() + "\n" +
                                 "Description: " + hike_description.getText().toString().trim())
-                        .setCancelable(true)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int i) {
@@ -108,7 +107,8 @@ public class AddHike extends AppCompatActivity {
                             }
                         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                            public void onClick(DialogInterface dialogInterface, int i)
+                            {
                                 dialogInterface.cancel();
                             }
                         }).show();
@@ -151,7 +151,8 @@ public class AddHike extends AppCompatActivity {
         return dateToString(day, month, year);
     }
 
-    public void openDatePiker(View view) {
+    public void openDatePiker(View view)
+    {
         datePickerDialog.show();
     }
 
