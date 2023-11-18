@@ -42,52 +42,55 @@ public class AdapterHike extends RecyclerView.Adapter<AdapterHike.MyViewr> {
     @Override
     public void onBindViewHolder(@NonNull AdapterHike.MyViewr holder, int position) {
         HikeModel hikeModel = myhike.get(position);
+
+        // Set data to views
         holder.hike_name_view.setText(String.valueOf(hikeModel.getHike_name()));
         holder.hike_date_view.setText(String.valueOf(hikeModel.getHike_datetime()));
 
-        holder.icon_image_edit.setOnClickListener(v -> {
-            Intent intent = new Intent(context, UpdateHike.class);
-            intent.putExtra("hike_id",String.valueOf(hikeModel.getHike_id()));
-            intent.putExtra("hike_name",String.valueOf(hikeModel.getHike_name()));
-            intent.putExtra("hike_location",String.valueOf(hikeModel.getHike_location()));
-            intent.putExtra("hike_datetime",String.valueOf(hikeModel.getHike_datetime()));
-            intent.putExtra("hike_parking_available",String.valueOf(hikeModel.getHike_parking_available()));
-            intent.putExtra("hike_length",String.valueOf(hikeModel.getHike_length()));
-            intent.putExtra("hike_difficulty",String.valueOf(hikeModel.getHike_difficulty()));
-            intent.putExtra("hike_description",String.valueOf(hikeModel.getHike_description()));
-            activity.startActivityForResult(intent,1);
-        });
+        // Edit action
+        holder.icon_image_edit.setOnClickListener(v -> startUpdateActivity(hikeModel));
 
-        holder.main_view.setOnClickListener(v -> {
-            Intent intent = new Intent(context, DetailHike.class);
-            intent.putExtra("hike_id", String.valueOf(hikeModel.getHike_id()));
-            intent.putExtra("hike_name", String.valueOf(hikeModel.getHike_name()));
-            intent.putExtra("hike_location", String.valueOf(hikeModel.getHike_location()));
-            intent.putExtra("hike_datetime", String.valueOf(hikeModel.getHike_datetime()));
-            intent.putExtra("hike_parking_available", String.valueOf(hikeModel.getHike_parking_available()));
-            intent.putExtra("hike_length", String.valueOf(hikeModel.getHike_length()));
-            intent.putExtra("hike_difficulty", String.valueOf(hikeModel.getHike_difficulty()));
-            intent.putExtra("hike_description", String.valueOf(hikeModel.getHike_description()));
-            activity.startActivityForResult(intent, 1);
-        });
+        // View details action
+        holder.main_view.setOnClickListener(v -> startDetailActivity(hikeModel));
 
-        holder.icon_image_remove.setOnClickListener(v -> {
-            holder.alerDialog.setTitle("Delete " + String.valueOf(hikeModel.getHike_name()))
-                    .setMessage("Do you want to delete a hike with this name " + String.valueOf(hikeModel.getHike_name()) + " này không?")
-                    .setCancelable(true)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            deleteHike1Row(hikeModel.getHike_id());
-                            activity.startActivityForResult(new Intent(context, MainActivity.class), 1);
-                        }
-                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    }).show();
-        });
+        // Remove action
+        holder.icon_image_remove.setOnClickListener(v -> showDeleteConfirmationDialog(hikeModel));
+    }
+
+    private void startUpdateActivity(HikeModel hikeModel) {
+        Intent intent = new Intent(context, UpdateHike.class);
+        putHikeModelExtras(intent, hikeModel);
+        activity.startActivityForResult(intent, 1);
+    }
+
+    private void startDetailActivity(HikeModel hikeModel) {
+        Intent intent = new Intent(context, DetailHike.class);
+        putHikeModelExtras(intent, hikeModel);
+        activity.startActivityForResult(intent, 1);
+    }
+
+    private void putHikeModelExtras(Intent intent, HikeModel hikeModel) {
+        intent.putExtra("hike_id", String.valueOf(hikeModel.getHike_id()));
+        intent.putExtra("hike_name", String.valueOf(hikeModel.getHike_name()));
+        intent.putExtra("hike_location", String.valueOf(hikeModel.getHike_location()));
+        intent.putExtra("hike_datetime", String.valueOf(hikeModel.getHike_datetime()));
+        intent.putExtra("hike_parking_available", String.valueOf(hikeModel.getHike_parking_available()));
+        intent.putExtra("hike_length", String.valueOf(hikeModel.getHike_length()));
+        intent.putExtra("hike_difficulty", String.valueOf(hikeModel.getHike_difficulty()));
+        intent.putExtra("hike_description", String.valueOf(hikeModel.getHike_description()));
+    }
+
+    private void showDeleteConfirmationDialog(HikeModel hikeModel) {
+        new AlertDialog.Builder(context)
+                .setTitle("Delete " + String.valueOf(hikeModel.getHike_name()))
+                .setMessage("Do you want to delete the hike with this name " + String.valueOf(hikeModel.getHike_name()) + "?")
+                .setCancelable(true)
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    deleteHike1Row(hikeModel.getHike_id());
+                    activity.startActivityForResult(new Intent(context, MainActivity.class), 1);
+                })
+                .setNegativeButton("No", (dialog, which) -> dialog.cancel())
+                .show();
     }
 
     public void deleteHike1Row(int hike_id) {

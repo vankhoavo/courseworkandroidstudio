@@ -1,6 +1,5 @@
 package com.example.courseworkandroid;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -8,11 +7,9 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -21,30 +18,29 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class AddHike extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private EditText hike_name, hike_location, hike_length, hike_description;
     private DatePickerDialog datePickerDialog;
     private RadioGroup radio_group;
-    private RadioButton radio_yes, radio_no;
     private Button hike_datetime, save;
     private Spinner hike_spinner;
-    private AlertDialog.Builder alertDiglog;
+    private AlertDialog.Builder alertDialogBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hike);
-
-        setInit();
-        setListener();
+        initializeViews();
+        setListeners();
         setNavigationView();
     }
 
-    public void setInit() {
-
+    private void initializeViews() {
         hike_name = findViewById(R.id.hike_name);
         hike_location = findViewById(R.id.hike_location);
         hike_length = findViewById(R.id.hike_length);
@@ -54,29 +50,24 @@ public class AddHike extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.add_hike);
 
         hike_datetime = findViewById(R.id.hike_datetime);
-        hike_datetime.setText(getDate());
+        hike_datetime.setText(getFormattedDate());
 
         radio_group = findViewById(R.id.radioGroup);
-        radio_yes = findViewById(R.id.radio_yes);
-        radio_no = findViewById(R.id.radio_no);
 
         hike_spinner = findViewById(R.id.hike_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.hike_level, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         hike_spinner.setAdapter(adapter);
 
-        alertDiglog = new AlertDialog.Builder(this);
+        alertDialogBuilder = new AlertDialog.Builder(this);
         save = findViewById(R.id.save);
     }
 
-    public void setListener() {
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month += 1;
-                String dateStr = dateToString(day, month, year);
-                hike_datetime.setText(dateStr);
-            }
+    private void setListeners() {
+        DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
+            month += 1;
+            String dateStr = getFormattedDate(day, month, year);
+            hike_datetime.setText(dateStr);
         };
 
         Calendar calendar = Calendar.getInstance();
@@ -84,114 +75,113 @@ public class AddHike extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        int style = AlertDialog.THEME_HOLO_DARK;
+        int style = AlertDialog.THEME_DEVICE_DEFAULT_DARK;
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
 
         save.setOnClickListener(v -> {
             if (isValidAddHike()) {
-                int groupbutton = radio_group.getCheckedRadioButtonId();
-                RadioButton radio_group = findViewById(groupbutton);
-                alertDiglog.setTitle("Confimation")
-                        .setMessage("Name: " + hike_name.getText().toString().trim() + "\n" +
-                                "Location: " + hike_location.getText().toString().trim() + "\n" +
-                                "Date: " + hike_datetime.getText().toString().trim() + "\n" +
-                                "Parking available: " + radio_group.getText().toString().trim() + "\n" +
-                                "Length: " + hike_length.getText().toString().trim() + "\n" +
-                                "Level: " + hike_spinner.getSelectedItem().toString().trim() + "\n" +
-                                "Description: " + hike_description.getText().toString().trim())
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int i) {
-                                addHike();
-                                startActivity(new Intent(AddHike.this, MainActivity.class));
-                            }
-                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i)
-                            {
-                                dialogInterface.cancel();
-                            }
-                        }).show();
+                showConfirmationDialog();
             }
         });
     }
 
-    public void addHike() {
+    private void showConfirmationDialog() {
+        int groupButtonId = radio_group.getCheckedRadioButtonId();
+        RadioButton selectedRadioButton = findViewById(groupButtonId);
+
+        alertDialogBuilder.setTitle("Confirmation")
+                .setMessage(String.format(
+                        "Name: %s\nLocation: %s\nDate: %s\nParking available: %s\nLength: %s\nLevel: %s\nDescription: %s",
+                        hike_name.getText().toString().trim(),
+                        hike_location.getText().toString().trim(),
+                        hike_datetime.getText().toString().trim(),
+                        selectedRadioButton.getText().toString().trim(),
+                        hike_length.getText().toString().trim(),
+                        hike_spinner.getSelectedItem().toString().trim(),
+                        hike_description.getText().toString().trim()))
+                .setPositiveButton("Yes Hike", (dialog, i) -> {
+                    addHike();
+                    startActivity(new Intent(AddHike.this, MainActivity.class));
+                })
+                .setNegativeButton("Cancel Hike", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }).show();
+    }
+
+    private void addHike() {
         MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(AddHike.this);
+        HikeModel hikeModel = createHikeModel();
+        myDatabaseHelper.addHike(hikeModel);
+    }
+
+    private HikeModel createHikeModel() {
+        int groupButtonId = radio_group.getCheckedRadioButtonId();
+        RadioButton selectedRadioButton = findViewById(groupButtonId);
+
         HikeModel hikeModel = new HikeModel();
-        int groupbutton = radio_group.getCheckedRadioButtonId();
-        RadioButton radio_group = findViewById(groupbutton);
         hikeModel.setHike_name(hike_name.getText().toString().trim());
         hikeModel.setHike_location(hike_location.getText().toString().trim());
         hikeModel.setHike_datetime(hike_datetime.getText().toString().trim());
         hikeModel.setHike_length(hike_length.getText().toString().trim());
-        hikeModel.setHike_parking_available(radio_group.getText().toString().trim());
+        hikeModel.setHike_parking_available(selectedRadioButton.getText().toString().trim());
         hikeModel.setHike_description(hike_description.getText().toString().trim());
         hikeModel.setHike_difficulty(hike_spinner.getSelectedItem().toString().trim());
-        myDatabaseHelper.addHike(hikeModel);
+
+        return hikeModel;
     }
 
-    private String dateToString(int day, int month, int year) {
-        if (day < 10) {
-            return month + "/0" + day + "/" + year;
-        } else if (month < 10) {
-            return "0" + month + "/" + day + "/" + year;
-        } else if (day < 10 && month < 10) {
-            return "0" + month + "/0" + day + "/" + year;
-        }
-        return day + "/" + month + "/" + year;
-    }
-
-    private String getDate() {
+    private String getFormattedDate(int day, int month, int year) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        month = month + 1;
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        return dateToString(day, month, year);
+        calendar.set(year, month - 1, day);
+        return dateFormat.format(calendar.getTime());
     }
 
-    public void openDatePiker(View view)
-    {
+    private String getFormattedDate() {
+        Calendar calendar = Calendar.getInstance();
+        return getFormattedDate(calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+    }
+
+    public void openDatePiker(View view) {
         datePickerDialog.show();
     }
 
-    public void setNavigationView() {
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int itemId = item.getItemId();
-                if (itemId == R.id.add_hike) {
-                    return true;
-                } else if (itemId == R.id.home_hike) {
-                    startActivity(new Intent(AddHike.this, MainActivity.class));
-                    overridePendingTransition(0, 0);
-                    return true;
-                }
-                return false;
+    private void setNavigationView() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.add_hike) {
+                return true;
+            } else if (itemId == R.id.home_hike) {
+                startActivity(new Intent(AddHike.this, MainActivity.class));
+                overridePendingTransition(0, 0);
+                return true;
             }
+            return false;
         });
     }
 
-    public void showToast(String message) {
+    private void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    public Boolean isValidAddHike() {
+    private Boolean isValidAddHike() {
         if (hike_name.getText().toString().trim().isEmpty()) {
-            showToast("Enter name of hike");
+            showToast("Enter the name of the hike");
             return false;
         } else if (hike_location.getText().toString().trim().isEmpty()) {
-            showToast("Enter location of hike");
+            showToast("Enter the location of the hike");
             return false;
         } else if (hike_length.getText().toString().trim().isEmpty()) {
-            showToast("Enter length of hike");
+            showToast("Enter the length of the hike");
             return false;
         } else if (hike_description.getText().toString().trim().isEmpty()) {
-            showToast("Enter description of hike");
+            showToast("Enter the description of the hike");
             return false;
         } else if (radio_group.getCheckedRadioButtonId() == -1) {
-            showToast("Please tick parking available");
+            showToast("Please select parking availability");
             return false;
         }
         return true;

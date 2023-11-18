@@ -75,59 +75,72 @@ public class UpdateHike extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    private Boolean isupdate() {
-        if (hike_name_edit.getText().toString().trim().isEmpty()) {
-            showToast("Enter name of update hike");
+    private boolean isupdate() {
+        if (isEmpty(hike_name_edit)) {
+            showToast("Enter the name of the hike");
             return false;
-        } else if (hike_location_edit.getText().toString().trim().isEmpty()) {
-            showToast("Enter location of updatehike");
+        } else if (isEmpty(hike_location_edit)) {
+            showToast("Enter the location of the hike");
             return false;
         } else if (radioGroup_edit.getCheckedRadioButtonId() == -1) {
-            showToast("Please tick parking available");
+            showToast("Please select parking availability");
             return false;
-        } else if (hike_length_edit.getText().toString().trim().isEmpty()) {
-            showToast("Enter length of update hike");
+        } else if (isEmpty(hike_length_edit)) {
+            showToast("Enter the length of the hike");
             return false;
-        } else if (hike_description_edit.getText().toString().trim().isEmpty()) {
-            showToast("Enter description of update hike");
+        } else if (isEmpty(hike_description_edit)) {
+            showToast("Enter the description of the hike");
             return false;
         }
         return true;
     }
 
+    private boolean isEmpty(EditText editText) {
+        return editText.getText().toString().trim().isEmpty();
+    }
+
+
     public void setListenerUpdateHike() {
-        icon_back.setOnClickListener(v -> {
-            startActivity(new Intent(UpdateHike.this, MainActivity.class));
-        });
+        icon_back.setOnClickListener(v -> navigateToMainActivity());
+
         hike_update.setOnClickListener(v -> {
             if (isupdate()) {
-                int requireGroupUpdate = radioGroup_edit.getCheckedRadioButtonId();
-                RadioButton radioGroup_edit = findViewById(requireGroupUpdate);
-                alertDialog.setTitle("Confirmation Update")
-                        .setMessage("Name: " + hike_name_edit.getText().toString().trim() + "\n" +
-                                "Location: " + hike_location_edit.getText().toString().trim() + "\n" +
-                                "Date: " + hike_datetime_edit.getText().toString().trim() + "\n" +
-                                "Parking available: " + radioGroup_edit.getText().toString().trim() + "\n" +
-                                "Length: " + hike_length_edit.getText().toString().trim() + "\n" +
-                                "Level: " + spinnerHike.getSelectedItem().toString().trim() + "\n" +
-                                "Description: " + hike_description_edit.getText().toString().trim())
-                        .setCancelable(true)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                updateAllHike();
-                                startActivity(new Intent(UpdateHike.this, MainActivity.class));
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        }).show();
+                showUpdateConfirmationDialog();
             }
         });
     }
+
+    private void navigateToMainActivity() {
+        startActivity(new Intent(UpdateHike.this, MainActivity.class));
+    }
+
+    private void showUpdateConfirmationDialog() {
+        int selectedRadioButtonId = radioGroup_edit.getCheckedRadioButtonId();
+        RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
+
+        String confirmationMessage = "Name: " + hike_name_edit.getText().toString().trim() + "\n" +
+                "Location: " + hike_location_edit.getText().toString().trim() + "\n" +
+                "Date: " + hike_datetime_edit.getText().toString().trim() + "\n" +
+                "Parking available: " + selectedRadioButton.getText().toString().trim() + "\n" +
+                "Length: " + hike_length_edit.getText().toString().trim() + "\n" +
+                "Level: " + spinnerHike.getSelectedItem().toString().trim() + "\n" +
+                "Description: " + hike_description_edit.getText().toString().trim();
+
+        alertDialog.setTitle("Confirmation Update")
+                .setMessage(confirmationMessage)
+                .setCancelable(true)
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    updateAllHike();
+                    navigateToMainActivity();
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
+    }
+
 
     public void updateAllHike() {
         MyDatabaseHelper mydbofHike = new MyDatabaseHelper(UpdateHike.this);
@@ -140,8 +153,7 @@ public class UpdateHike extends AppCompatActivity {
         hikeModel.setHike_parking_available(radioGroup_edit.getText().toString().trim());
         hikeModel.setHike_datetime(hike_datetime_edit.getText().toString().trim());
         hikeModel.setHike_length(hike_length_edit.getText().toString().trim());
-        //hikeModel.setHike_parking_available(spinnerHike.getSelectedItem().toString().trim()); cái cũ
-        hikeModel.setHike_difficulty(spinnerHike.getSelectedItem().toString().trim()); //cái mới đúng không? ->
+        hikeModel.setHike_difficulty(spinnerHike.getSelectedItem().toString().trim());
         hikeModel.setHike_description(hike_description_edit.getText().toString().trim());
         mydbofHike.updateHike(hikeModel);
     }
@@ -184,30 +196,26 @@ public class UpdateHike extends AppCompatActivity {
     }
 
     private void dateupdate() {
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                month += 1;
-                String dateupdate = dateToString(day, month, year);
-                hike_datetime_edit.setText(dateupdate);
-            }
+        DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, day) -> {
+            month += 1;
+            String dateUpdate = dateToString(day, month, year);
+            hike_datetime_edit.setText(dateUpdate);
         };
+
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int style = AlertDialog.THEME_HOLO_DARK;
+
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
     }
 
     private String dateToString(int day, int month, int year) {
-        if (day < 10) {
-            return month + "/0" + day + "/" + year;
-        } else if (month < 10) {
-            return "0" + month + "/" + day + "/" + year;
-        } else if (day < 10 && month < 10) {
-            return "0" + month + "/0" + day + "/" + year;
-        }
-        return month + "/" + day + "/" + year;
+        String dayString = (day < 10) ? "0" + day : String.valueOf(day);
+        String monthString = (month < 10) ? "0" + month : String.valueOf(month);
+
+        return monthString + "/" + dayString + "/" + year;
     }
+
 }
